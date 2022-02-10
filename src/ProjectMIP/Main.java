@@ -8,9 +8,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("FXML//CreateUser.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/FXML/login.fxml"));
         primaryStage.setTitle("My Library");
-        primaryStage.setScene(new Scene(root, 600, 375));
+        primaryStage.setScene(new Scene(root, 700, 355));
         primaryStage.show();
     }
 

@@ -3,6 +3,7 @@ package Service.UserService;
 import Model.User;
 import Repository.UserRepository.UserRepository;
 import Service.UserService.Exceptions.UserExceptions;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -26,11 +27,16 @@ public class UserService
             case emailAlreadyExists: {errorMessage = "Email already exists!"; break;}
             case success:
             {
+                String encryptedPassword = DigestUtils.md5Hex(password).toUpperCase();
+
                 User user = new User();
                 user.setFirstName(firstName);
                 user.setLastName(lastName);
                 user.setEmail(email);
-                user.setPassword(password);
+                user.setPassword(encryptedPassword);
+
+                user.setRole("cititor");
+
                 userRepository.addUserToDatabase(user);
             }
         }

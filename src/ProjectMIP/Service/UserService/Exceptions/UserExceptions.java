@@ -41,13 +41,13 @@ public class UserExceptions
     //firstName must be greater than 3
     public boolean checkFirstName(String firstName)
     {
-        return firstName.length()>3;
+        return firstName.length()>=3;
     }
 
     //firstName must be greater than 4
     public boolean checkLastName(String lastName)
     {
-        return lastName.length()>4;
+        return lastName.length()>=4;
     }
 
     //check email format email format

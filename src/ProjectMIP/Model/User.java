@@ -22,6 +22,9 @@ public class User
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name ="role", nullable = false)
+    private String role;
+
     public String getFirstName() {
         return firstName;
     }
@@ -55,6 +58,15 @@ public class User
 
     public User setPassword(String password) {
         this.password = password;
+        return this;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public User setRole(String role) {
+        this.role = role;
         return this;
     }
 

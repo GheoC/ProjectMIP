@@ -21,7 +21,6 @@ public class UserRepository
             entityTransaction.begin();
 
             entityManager.persist(user);
-            System.out.println("User added successfully "+user);
             entityTransaction.commit();
 
         } catch (Exception exception) {
