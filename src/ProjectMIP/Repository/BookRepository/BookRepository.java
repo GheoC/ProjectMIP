@@ -71,7 +71,7 @@ public class BookRepository
     }
 
 
-    public void updateItemsForBooks(Set<Book> books)
+    public void decreaseItemsForBooks(Set<Book> books)
     {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         String strQuery = "SELECT c FROM Book c WHERE c.id IS NOT NULL";
@@ -85,5 +85,20 @@ public class BookRepository
             entityManager.getTransaction().commit();
         }
             entityManager.close();
+    }
+
+    public void increaseItemsForBooks(List<Integer> bookIds)
+    {
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+//        String strQuery = "SELECT c FROM Book c WHERE c.id IS NOT NULL";
+//        TypedQuery<Book> typedQuery = entityManager .createQuery(strQuery, Book.class);
+
+        for (int i = 0; i <bookIds.size(); i++) {
+            Book tempBook = entityManager.find(Book.class, bookIds.get(i));
+            entityManager.getTransaction().begin();
+            tempBook.setItemsAvailable(tempBook.getItemsAvailable()+1);
+            entityManager.getTransaction().commit();
+        }
+        entityManager.close();
     }
 }

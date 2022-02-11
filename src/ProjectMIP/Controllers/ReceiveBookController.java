@@ -3,7 +3,9 @@ package Controllers;
 import Model.BookOrder;
 import Model.User;
 import Service.BookOrderService.BookOrderService;
+import Service.BookService.BookService;
 import Service.UserService.UserService;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,6 +24,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReceiveBookController
@@ -48,11 +51,28 @@ public class ReceiveBookController
 
     private final BookOrderService bookOrderService = new BookOrderService();
     private final UserService userService = new UserService();
+    private final BookService bookService = new BookService();
 
     public void receiveBooksBack(ActionEvent actionEvent)
     {
+        User user = userService.findUserByEmail(txt_UserEmail.getText());
+        System.out.println(user.getId());
+        List<BookOrder> bookOrderList= bookOrderService.findBookOrder(user.getId());
 
+        List<Integer> bookIds = new ArrayList<>();
+        for (BookOrder bookOrder:bookOrderList)
+        {
+            bookIds.add(bookOrder.getBook().getId());
+        }
 
+        if (bookOrderList.size()>0)
+        {
+            bookOrderService.receiveBooksFromUser(bookOrderList);
+            bookService.increaseItemsForBooks(bookIds);
+
+        }
+        txt_UserEmail.clear();
+        view_Table.getItems().clear();
 
     }
 
@@ -80,6 +100,16 @@ public class ReceiveBookController
         System.out.println(user.getId());
         List<BookOrder> bookOrderList= bookOrderService.findBookOrder(user.getId());
 
+        for (BookOrder bookOrder:bookOrderList)
+        {
+            if (bookOrder.getDeadline().isBefore(LocalDate.now()))
+            {
+                lbl_AlertMessage.setText("User extended lending period. Apply penalty");
+                lbl_AlertMessage.setOpacity(1);
+                lbl_AlertMessage.setTextFill(Color.web("#da2525"));
+            }
+        }
+
         if (bookOrderList.size()<1)
         {
             txt_AlertMessage.setText("No orders from that user");
@@ -90,12 +120,11 @@ public class ReceiveBookController
         bookOrderObservableList.addAll(bookOrderList);
 
         view_BookOrderId.setCellValueFactory(new PropertyValueFactory<BookOrder,Integer>("id"));
-        view_UserEmail.setCellValueFactory(new PropertyValueFactory<BookOrder, String>("email"));
-        view_BookName.setCellValueFactory(new PropertyValueFactory<BookOrder,String>("book.name"));
+        view_UserEmail.setCellValueFactory(c->new SimpleStringProperty(c.getValue().getUser().getEmail()));
+        view_BookName.setCellValueFactory(c->new SimpleStringProperty(c.getValue().getBook().getName()));
         view_LendDate.setCellValueFactory(new PropertyValueFactory<BookOrder, LocalDate>("lendingDate"));
         view_Deadline.setCellValueFactory((new PropertyValueFactory<BookOrder,LocalDate>("deadline")));
         view_Table.setItems(bookOrderObservableList);
-
 
     }
 }

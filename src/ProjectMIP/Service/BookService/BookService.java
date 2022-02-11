@@ -21,9 +21,14 @@ public class BookService
 
     }
 
-    public void updateItemsForBooks(Set<Book> books)
+    public void decreaseItemsForBooks(Set<Book> books)
     {
-        bookRepository.updateItemsForBooks(books);
+        bookRepository.decreaseItemsForBooks(books);
+    }
+
+    public void increaseItemsForBooks(List<Integer> bookIds)
+    {
+        bookRepository.increaseItemsForBooks(bookIds);
     }
 
 

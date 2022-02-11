@@ -18,11 +18,17 @@ public class BookOrderService
 
     }
 
-
     public List<BookOrder> findBookOrder(Integer id)
     {
 
         return bookOrderRepository.findBookOrderByUserId(id);
+    }
+
+    public void receiveBooksFromUser(List<BookOrder> bookOrders)
+    {
+        bookOrderRepository.receiveBooks(bookOrders);
+
+
     }
 
 }

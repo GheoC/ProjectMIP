@@ -51,7 +51,7 @@ public class BookOrderRepository
     public List<BookOrder> findBookOrderByUserId(Integer userId)
     {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
-        String query = "SELECT c from BookOrder c WHERE c.user.id = :userId";
+        String query = "SELECT c from BookOrder c WHERE c.user.id = :userId AND c.active=1";
         TypedQuery<BookOrder> typedQuery = entityManager.createQuery(query, BookOrder.class);
         typedQuery.setParameter("userId", userId);
         List<BookOrder> bookOrders = null;
@@ -64,5 +64,23 @@ public class BookOrderRepository
         if (bookOrders==null) return null;
 
         return bookOrders;
+    }
+
+
+    public void receiveBooks(List<BookOrder> bookOrders)
+    {
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+//        String strQuery = "SELECT c FROM Book c WHERE c.id IS NOT NULL";
+//        TypedQuery<Book> typedQuery = entityManager .createQuery(strQuery, Book.class);
+
+        for (BookOrder bookOrder :bookOrders)
+        {
+            BookOrder tempBook = entityManager.find(BookOrder.class,bookOrder.getId());
+            entityManager.getTransaction().begin();
+            tempBook.setActive(false);
+            tempBook.setReceivedDate(LocalDate.now());
+            entityManager.getTransaction().commit();
+        }
+        entityManager.close();
     }
 }

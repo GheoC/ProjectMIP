@@ -83,10 +83,12 @@ public class LendBookController implements Initializable
        User user = userService.findUserByEmail(txt_email.getText());
 
        bookOrderService.lendBooksToUser(user, selectedBooks, Integer.valueOf(txt_Days.getText()));
-       bookService.updateItemsForBooks(selectedBooks);
+       bookService.decreaseItemsForBooks(selectedBooks);
         ObservableList<Book> refresedBooks = FXCollections.observableArrayList();
         refresedBooks.addAll(bookService.getAllBooks());
         view_Table.setItems(refresedBooks);
+        txt_email.clear();
+        txt_Days.clear();
     }
 
     public void returnMainPage(ActionEvent actionEvent) throws IOException {
