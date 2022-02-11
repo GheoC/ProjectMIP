@@ -4,6 +4,7 @@ import Model.Book;
 import Repository.BookRepository.BookRepository;
 
 import java.util.List;
+import java.util.Set;
 
 public class BookService
 {
@@ -18,6 +19,11 @@ public class BookService
 
         bookRepository.addBookToDatabase(book);
 
+    }
+
+    public void updateItemsForBooks(Set<Book> books)
+    {
+        bookRepository.updateItemsForBooks(books);
     }
 
 

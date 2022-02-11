@@ -4,6 +4,7 @@ import Model.Book;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 public class BookRepository
 {
@@ -35,7 +36,7 @@ public class BookRepository
     public List<Book> getBooks()
     {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
-        String strQuery = "SELECT c FROM Book c WHERE c.id IS NOT NULL";
+        String strQuery = "SELECT c FROM Book c WHERE c.id IS NOT NULL AND c.itemsAvailable > 0";
         TypedQuery<Book> typedQuery = entityManager .createQuery(strQuery, Book.class);
         List<Book> books;
 
@@ -50,5 +51,39 @@ public class BookRepository
             entityManager.close();
         }
         return null;
+    }
+
+    public Book findBookById(Integer id)
+    {
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        String query = "SELECT c from Book c WHERE c.id = :id";
+
+        TypedQuery<Book> typedQuery = entityManager.createQuery(query, Book.class);
+        typedQuery.setParameter("id", id);
+        Book book = null;
+
+        book = typedQuery.getResultList().stream().findFirst().orElse(null);
+        entityManager.close();
+
+        if (book==null) return null;
+
+        return book;
+    }
+
+
+    public void updateItemsForBooks(Set<Book> books)
+    {
+        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+        String strQuery = "SELECT c FROM Book c WHERE c.id IS NOT NULL";
+        TypedQuery<Book> typedQuery = entityManager .createQuery(strQuery, Book.class);
+
+        for (Book book:books)
+        {
+            Book tempBook = entityManager.find(Book.class,book.getId());
+            entityManager.getTransaction().begin();
+            tempBook.setItemsAvailable(tempBook.getItemsAvailable()-1);
+            entityManager.getTransaction().commit();
+        }
+            entityManager.close();
     }
 }

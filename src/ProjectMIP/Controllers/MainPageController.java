@@ -47,9 +47,29 @@ public class MainPageController {
     }
 
     @FXML
-    void openLendBook(ActionEvent event)
-    {
+    void openLendBook(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/lendBook.fxml"));
+        Parent root = loader.load();
 
+        LendBookController lendBookController = loader.getController();
+        lendBookController.initUsername(lbl_emailLoggedIn.getText());
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+
+    }
+
+    public void openReceiveBook(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/receiveBook.fxml"));
+        Parent root = loader.load();
+
+        ReceiveBookController receiveBookController = loader.getController();
+        receiveBookController.initUsername(lbl_emailLoggedIn.getText());
+
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
 
     }
 
@@ -86,4 +106,13 @@ public class MainPageController {
         lbl_emailLoggedIn.setText(email);
     }
 
+
+    public void logout(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/login.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
 }

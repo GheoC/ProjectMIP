@@ -20,6 +20,9 @@
             <property name="javax.persistence.jdbc.user" value="root" />
             <!-- Password -->
             <property name="javax.persistence.jdbc.password" value="rootGH" />
+
+            <property name="hibernate.hbm2ddl.auto" value="none"/>
+
         </properties>
     </persistence-unit>
 </persistence>

@@ -4,23 +4,26 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "book_order")
+@Table(name = "book_orders")
 public class BookOrder
 {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
+    @JoinColumn(name ="book_id")
     private Book book;
 
-    private LocalDate localDate;
-
+    private LocalDate lendingDate;
     private int lendingTime;
+    private LocalDate deadline;
+    private boolean active;
+    private LocalDate receivedDate;
 
     public int getId() {
         return id;
@@ -46,12 +49,12 @@ public class BookOrder
         this.book = book;
     }
 
-    public LocalDate getLocalDate() {
-        return localDate;
+    public LocalDate getLendingDate() {
+        return lendingDate;
     }
 
-    public void setLocalDate(LocalDate localDate) {
-        this.localDate = localDate;
+    public void setLendingDate(LocalDate lendingDate) {
+        this.lendingDate = lendingDate;
     }
 
     public int getLendingTime() {
@@ -62,14 +65,41 @@ public class BookOrder
         this.lendingTime = lendingTime;
     }
 
+    public LocalDate getReceivedDate() {
+        return receivedDate;
+    }
+
+    public void setReceivedDate(LocalDate receivedDate) {
+        this.receivedDate = receivedDate;
+    }
+
+    public LocalDate getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(LocalDate deadline) {
+        this.deadline = deadline;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     @Override
     public String toString() {
         return "BookOrder{" +
                 "id=" + id +
                 ", user=" + user +
                 ", book=" + book +
-                ", localDate=" + localDate +
+                ", lendingDate=" + lendingDate +
                 ", lendingTime=" + lendingTime +
+                ", deadline=" + deadline +
+                ", active=" + active +
+                ", receivedDate=" + receivedDate +
                 '}';
     }
 }

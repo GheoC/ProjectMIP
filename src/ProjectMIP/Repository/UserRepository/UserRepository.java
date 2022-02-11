@@ -55,13 +55,15 @@ public class UserRepository
     public List<User> getUsers()
     {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
-        String strQuery = "SELECT c FROM User c WHERE c.id IS NOT NULL";
+        String strQuery = "SELECT c FROM User c";
         TypedQuery<User> typedQuery = entityManager .createQuery(strQuery, User.class);
         List<User> users;
+
 
         try
         {
             users = typedQuery.getResultList();
+            System.out.println(users);
             return  users;
 
         }catch (NoResultException exception) {

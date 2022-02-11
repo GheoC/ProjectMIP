@@ -1,14 +1,16 @@
 package Model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name="user")
+@Table(name="users")
 public class User
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Integer id;
 
     @Column(name = "firstname", nullable = false)
@@ -26,8 +28,12 @@ public class User
     @Column(name ="role", nullable = false)
     private String role;
 
-    @OneToMany
-    private Set<BookOrder> bookOrders;
+    @OneToMany(mappedBy = "user")
+    private Set<BookOrder> bookOrders = new HashSet<>();
+
+    public Integer getId() {
+        return id;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -74,10 +80,11 @@ public class User
         return this;
     }
 
+
     @Override
     public String toString() {
-        return "User{" +
-                "firstName='" + firstName + '\'' +
+        return "User{" +id+
+                " firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 '}';
