@@ -35,6 +35,11 @@ public class UserExceptions
            return UserExceptionsEnum.emailAlreadyExists;
        }
 
+       if (checkPassword(password)==false)
+       {
+           return UserExceptionsEnum.invalidPassword;
+       }
+
        return UserExceptionsEnum.success;
     }
 
@@ -70,6 +75,15 @@ public class UserExceptions
         {
             return true;
         }
+    }
+
+    public boolean checkPassword(String password)
+    {
+        if (password.length()<4)
+        {
+         return false;
+        }
+        return true;
     }
 
 

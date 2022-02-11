@@ -1,6 +1,7 @@
 package Model;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name="user")
@@ -24,6 +25,9 @@ public class User
 
     @Column(name ="role", nullable = false)
     private String role;
+
+    @OneToMany
+    private Set<BookOrder> bookOrders;
 
     public String getFirstName() {
         return firstName;

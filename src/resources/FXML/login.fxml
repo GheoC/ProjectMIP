@@ -43,15 +43,16 @@
             <PasswordField fx:id="txt_password" prefHeight="25.0" prefWidth="256.0" promptText="your password" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
-      <Button fx:id="lbl_Login" layoutX="179.0" layoutY="243.0" mnemonicParsing="false" onAction="#loginUser" prefHeight="44.0" prefWidth="121.0" text="LOGIN">
+      <Button fx:id="lbl_Login" layoutX="193.0" layoutY="259.0" mnemonicParsing="false" onAction="#loginUser" prefHeight="44.0" prefWidth="121.0" text="LOGIN">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="lbl_CreateUser" layoutX="402.0" layoutY="243.0" mnemonicParsing="false" onAction="#loadCreateUser" prefHeight="44.0" prefWidth="121.0" text="Register">
+      <Button fx:id="lbl_CreateUser" layoutX="408.0" layoutY="259.0" mnemonicParsing="false" onAction="#loadCreateUser" prefHeight="44.0" prefWidth="121.0" text="Register">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
+      <Label fx:id="lbl_ErrorMessage" layoutX="243.0" layoutY="215.0" opacity="0.0" prefHeight="25.0" prefWidth="238.0" text="message" />
    </children>
 </AnchorPane>

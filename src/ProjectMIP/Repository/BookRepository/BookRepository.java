@@ -1,18 +1,15 @@
-package Repository.UserRepository;
+package Repository.BookRepository;
 
-
-import Model.User;
+import Model.Book;
 
 import javax.persistence.*;
 import java.util.List;
 
-public class UserRepository
+public class BookRepository
 {
-
     private static EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("connetionDB");
 
-
-    public void addUserToDatabase(User user)
+    public void addBookToDatabase(Book book)
     {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         EntityTransaction entityTransaction = null;
@@ -21,7 +18,7 @@ public class UserRepository
             entityTransaction = entityManager.getTransaction();
             entityTransaction.begin();
 
-            entityManager.persist(user);
+            entityManager.persist(book);
             entityTransaction.commit();
 
         } catch (Exception exception) {
@@ -32,37 +29,20 @@ public class UserRepository
         } finally {
             entityManager.close();
         }
+
     }
 
-
-    public User findUser(String email)
+    public List<Book> getBooks()
     {
         EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
-        String query = "SELECT c from User c WHERE c.email = :email";
-
-        TypedQuery<User> typedQuery = entityManager.createQuery(query, User.class);
-        typedQuery.setParameter("email", email);
-        User user = null;
-
-            user = typedQuery.getResultList().stream().findFirst().orElse(null);
-            entityManager.close();
-
-            if (user==null) return null;
-
-            return user;
-    }
-
-    public List<User> getUsers()
-    {
-        EntityManager entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
-        String strQuery = "SELECT c FROM User c WHERE c.id IS NOT NULL";
-        TypedQuery<User> typedQuery = entityManager .createQuery(strQuery, User.class);
-        List<User> users;
+        String strQuery = "SELECT c FROM Book c WHERE c.id IS NOT NULL";
+        TypedQuery<Book> typedQuery = entityManager .createQuery(strQuery, Book.class);
+        List<Book> books;
 
         try
         {
-            users = typedQuery.getResultList();
-            return  users;
+            books = typedQuery.getResultList();
+            return books;
 
         }catch (NoResultException exception) {
             exception.printStackTrace();
@@ -70,6 +50,5 @@ public class UserRepository
             entityManager.close();
         }
         return null;
-
     }
 }
