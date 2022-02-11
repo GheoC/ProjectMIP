@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane prefHeight="744.0" prefWidth="1054.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MainPageController">
+   <children>
+      <GridPane alignment="TOP_RIGHT" layoutX="32.0" layoutY="38.0" prefHeight="503.0" prefWidth="466.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="210.0" minWidth="10.0" prefWidth="205.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.0" minWidth="10.0" prefWidth="224.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="199.0" minHeight="10.0" prefHeight="183.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="269.0" minHeight="10.0" prefHeight="181.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="261.0" minHeight="10.0" prefHeight="162.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="lbl_AddBook" mnemonicParsing="false" onAction="#openAddBook" prefHeight="169.0" prefWidth="196.0" text="Add Book" />
+            <Button fx:id="lbl_LendBook" mnemonicParsing="false" onAction="#openLendBook" prefHeight="169.0" prefWidth="196.0" text="Lend Book" GridPane.rowIndex="1" />
+            <Button fx:id="lbl_ViewBooks" mnemonicParsing="false" onAction="#openViewBooks" prefHeight="146.0" prefWidth="192.0" text="View Books" GridPane.rowIndex="2" />
+            <Button fx:id="lbl_ViewUsers" mnemonicParsing="false" onAction="#openViewUsers" prefHeight="146.0" prefWidth="192.0" text="View Users" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+      <Label layoutX="85.0" layoutY="705.0" prefHeight="26.0" prefWidth="36.0" text="user:" />
+      <Label fx:id="lbl_emailLoggedIn" layoutX="121.0" layoutY="709.0" prefHeight="17.0" prefWidth="216.0" text="email" />
+      <Pane fx:id="mainPane" layoutX="475.0" layoutY="38.0" prefHeight="594.0" prefWidth="539.0" />
+   </children>
+</AnchorPane>
