@@ -55,6 +55,10 @@ public class LoginController {
             Parent root = loader.load();
             MainPageController mainPageController = loader.getController();
             mainPageController.initMainPage(txt_username.getText());
+            if (roleOfUser.equals("cititor"))
+            {
+                mainPageController.checkNotifications();
+            }
 
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));

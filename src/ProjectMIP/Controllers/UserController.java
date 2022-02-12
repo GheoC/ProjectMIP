@@ -2,6 +2,7 @@ package Controllers;
 
 import Service.UserService.UserService;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -10,14 +11,18 @@ import javafx.scene.text.Font;
 
 public class UserController {
 
+    @FXML
+    private TextField txt_FirstName;
+    @FXML
+    private TextField txt_LastName;
+    @FXML
+    private TextField txt_Email;
+    @FXML
+    private PasswordField txt_Password;
+    @FXML
+    private Label lbl_UserCreated;
 
-    public TextField txt_FirstName;
-    public TextField txt_LastName;
-    public TextField txt_Email;
-    public PasswordField txt_Password;
-    public Label lbl_UserCreated;
-
-    private UserService userService = new UserService();
+    private final UserService userService = new UserService();
 
 
     public void clickButton(ActionEvent actionEvent) {

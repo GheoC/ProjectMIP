@@ -1,5 +1,11 @@
 package Controllers;
 
+import Model.BookOrder;
+import Service.BookOrderService.BookOrderService;
+import Service.UserService.UserService;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,12 +14,32 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
 
 public class MainPageController {
+
+
+    @FXML
+    private TableColumn<BookOrder, LocalDate> view_Deadline;
+    @FXML
+    private TableView<BookOrder> view_Table;
+    @FXML
+    private TableColumn<BookOrder, LocalDate> view_LendDate;
+    @FXML
+    private TableColumn<BookOrder,String> view_BookName;
+    @FXML
+    private TableColumn<BookOrder, Integer> view_BookOrderiD;
+    @FXML
+    private Label lbl_NotificariAlert;
     @FXML
     private Button lbl_AddBook;
 
@@ -31,7 +57,6 @@ public class MainPageController {
 
     @FXML
     private Pane mainPane;
-
 
     @FXML
     void openAddBook(ActionEvent event) throws IOException {
@@ -114,5 +139,43 @@ public class MainPageController {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
+    }
+
+    public void checkNotifications()
+    {
+        UserService userService = new UserService();
+
+
+        if (userService.getRoleOfUser(lbl_emailLoggedIn.getText()).equals("cititor"))
+        {
+            BookOrderService bookOrderService = new BookOrderService();
+            List<BookOrder> bookOrderList = bookOrderService
+                    .findBookOrderedByUsed(userService.findUserByEmail(lbl_emailLoggedIn.getText()).getId());
+
+            ObservableList<BookOrder> bookOrderObservableList = FXCollections.observableArrayList();
+
+            Boolean checkDeadlineOver=false;
+            for(BookOrder bookOrder:bookOrderList)
+            {
+             if (bookOrder.getDeadline().isBefore(LocalDate.now()))
+             {
+                 checkDeadlineOver=true;
+                 bookOrderObservableList.add(bookOrder);
+             }
+            }
+            if (checkDeadlineOver)
+            {
+                lbl_NotificariAlert.setText("You kept some books over the deadline. Please return them asap");
+                lbl_NotificariAlert.setOpacity(1);
+                lbl_NotificariAlert.setTextFill(Color.web("#da2525"));
+                view_BookOrderiD.setCellValueFactory(new PropertyValueFactory<BookOrder, Integer>("id"));
+                view_BookName.setCellValueFactory(c->new SimpleStringProperty(c.getValue().getBook().getName()));
+                view_LendDate.setCellValueFactory(new PropertyValueFactory<BookOrder,LocalDate>("lendingDate"));
+                view_Deadline.setCellValueFactory(new PropertyValueFactory<BookOrder,LocalDate>("deadline"));
+                view_Table.setItems(bookOrderObservableList);
+                view_Table.setVisible(true);
+            }
+        }
+
     }
 }
