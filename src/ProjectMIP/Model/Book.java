@@ -2,7 +2,6 @@ package Model;
 
 
 import javafx.scene.control.CheckBox;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;

@@ -78,7 +78,7 @@ public class LoginController {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/CreateUser.fxml"));
         Parent root = loader.load();
-        UserController userController = loader.getController();
+        CreateUserController createUserController = loader.getController();
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.show();
